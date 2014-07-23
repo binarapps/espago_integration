@@ -1,5 +1,5 @@
 %h1 Payments
-=form_tag charge_customer_path do
+=form_tag charge_customer_path, id: "espago_form" do
   .form-group
     %label Credit Card Number
     %input#espago_card_number{type: "text"}
@@ -30,3 +30,42 @@
     %input#espago_verification_value{type: "text"}
     %span#espago_verification_value_error
   =submit_tag "Charge me"
+
+:javascript
+  $( document ).ready(function() {
+    $("#espago_form").submit(function(event){
+      var espago = new Espago({public_key: "#{Rails.application.secrets.espago_public_key}", custom: true, live: false});
+      event.preventDefault();
+      event.stopPropagation();
+      if (espago.validate_card_number()){
+        $("#espago_card_number_error").text("");
+      } else {
+        $("#espago_card_number_error").text("Data error!");
+      };
+
+      if (espago.validate_first_name()){
+        $("#espago_first_name_error").text("");
+      } else {
+        $("#espago_first_name_error").text("Data error!");
+      };
+
+      if (espago.validate_last_name()){
+        $("#espago_last_name_error").text("");
+      } else {
+        $("#espago_last_name_error").text("Data error!");
+      };
+
+      if (espago.validate_card_date()){
+        $("#espago_year_error").text("");
+      } else {
+        $("#espago_year_error").text("Data error!");
+      };
+
+      if (espago.validate_card_cvc()){
+        $("#espago_verification_value_error").text("");
+      } else {
+        $("#espago_verification_value_error").text("Data error!");
+      };
+      espago.create_token();
+    });
+  });

@@ -1,1 +1,26 @@
 %h1 Payments
+=form_tag charge_customer_path do
+  %label Credit Card Number
+  %input#espago_card_number{type: "text"}
+  %span#espago_card_number_error
+  %br
+  %label First Name
+  %input#espago_first_name{type: "text"}
+  %span#espago_first_name_error
+  %br
+  %label Last Name
+  %input#espago_last_name{type: "text"}
+  %span#espago_last_name_error
+  %br
+  %label Month expire
+  %input#espago_month{type: "text"}
+  %span#espago_month_error
+  %br
+  %label Year expire
+  %input#espago_year{type: "text"}
+  %span#espago_year_error
+  %br
+  %label Verification Value
+  %input#espago_verification_value{type: "text"}
+  %span#espago_verification_value_error
+  =submit_tag "Charge me"

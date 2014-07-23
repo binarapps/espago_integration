@@ -12,6 +12,7 @@ class PaymentsController < ApplicationController
       puts "Charging client"
       response = Espago.charges(:post, charge)      
       puts response.body
+      redirect_to root_url
     else
       redirect_to root_url
     end
